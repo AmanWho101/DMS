@@ -4,7 +4,7 @@
      <tr>
         <th>First Name</th>
         <th>Last Name</th>
-        <th>Wu</th>
+        <th>Job</th>
         <th >Action</th>
      </tr>
     </thead>
@@ -13,7 +13,7 @@
         <tr>
             <td>{!! $employee->first_name !!}</td>
             <td>{!! $employee->last_name !!}</td>
-            <td>{!! $employee->wu !!}</td>
+            <td>{!! $employee->job !!}</td>
             <td>
                  <a href="{{ route('admin.employee.employees.show', collect($employee)->first() ) }}">
                      <i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="view employee"></i>

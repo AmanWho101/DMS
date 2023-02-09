@@ -15,7 +15,8 @@ class Document extends Model
 
     public $fillable = [
         'file_name',
-        'file_path'
+        'file_path',
+        'user_id'
     ];
 
     /**
@@ -25,7 +26,8 @@ class Document extends Model
      */
     protected $casts = [
         'file_name' => 'string',
-        'file_path' => 'string'
+        'file_path' => 'string',
+        'user_id' => 'integer'
     ];
 
     /**

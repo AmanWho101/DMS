@@ -36,13 +36,52 @@ Route::get('documents/{documents}/edit', ['as'=> 'documents.edit', 'uses' => 'Do
 Route::group(array('prefix' => 'admin/search/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.search.'), function () {
 
 Route::get('searches', ['as'=> 'searches.index', 'uses' => 'Search\SearchController@index']);
-Route::post('searches', ['as'=> 'searches.store', 'uses' => 'Search\SearchController@store']);
-Route::get('searches/create', ['as'=> 'searches.create', 'uses' => 'Search\SearchController@create']);
-Route::put('searches/{searches}', ['as'=> 'searches.update', 'uses' => 'Search\SearchController@update']);
-Route::patch('searches/{searches}', ['as'=> 'searches.update', 'uses' => 'Search\SearchController@update']);
-Route::get('searches/{id}/delete', ['as' => 'searches.delete', 'uses' => 'Search\SearchController@getDelete']);
-Route::get('searches/{id}/confirm-delete', ['as' => 'searches.confirm-delete', 'uses' => 'Search\SearchController@getModalDelete']);
-Route::get('searches/{searches}', ['as'=> 'searches.show', 'uses' => 'Search\SearchController@show']);
-Route::get('searches/{searches}/edit', ['as'=> 'searches.edit', 'uses' => 'Search\SearchController@edit']);
+// Route::post('searches', ['as'=> 'searches.store', 'uses' => 'Search\SearchController@store']);
+// Route::get('searches/create', ['as'=> 'searches.create', 'uses' => 'Search\SearchController@create']);
+// Route::put('searches/{searches}', ['as'=> 'searches.update', 'uses' => 'Search\SearchController@update']);
+// Route::patch('searches/{searches}', ['as'=> 'searches.update', 'uses' => 'Search\SearchController@update']);
+// Route::get('searches/{id}/delete', ['as' => 'searches.delete', 'uses' => 'Search\SearchController@getDelete']);
+// Route::get('searches/{id}/confirm-delete', ['as' => 'searches.confirm-delete', 'uses' => 'Search\SearchController@getModalDelete']);
+// Route::get('searches/{searches}', ['as'=> 'searches.show', 'uses' => 'Search\SearchController@show']);
+// Route::get('searches/{searches}/edit', ['as'=> 'searches.edit', 'uses' => 'Search\SearchController@edit']);
+
+//    # custom datatables
+
+Route::get('searches/sliderData', 'Search\SearchController@sliderData')->name('SearchController.sliderData');
+Route::get('searches/radioData', 'Search\SearchController@radioData')->name('SearchController.radioData');
+Route::get('searches/selectData', 'Search\SearchController@selectData')->name('SearchController.selectData');
+Route::get('searches/buttonData', 'Search\SearchController@buttonData')->name('SearchController.buttonData');
+Route::get('searches/totalData', 'Search\SearchController@totalData')->name('SearchController.totalData');
+
+
+});
+ 
+
+Route::group(array('prefix' => 'admin/documnt/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.documnt.'), function () {
+
+Route::get('documnts', ['as'=> 'documnts.index', 'uses' => 'Documnt\DocumntController@index']);
+Route::post('documnts', ['as'=> 'documnts.store', 'uses' => 'Documnt\DocumntController@store']);
+Route::get('documnts/create', ['as'=> 'documnts.create', 'uses' => 'Documnt\DocumntController@create']);
+Route::put('documnts/{documnts}', ['as'=> 'documnts.update', 'uses' => 'Documnt\DocumntController@update']);
+Route::patch('documnts/{documnts}', ['as'=> 'documnts.update', 'uses' => 'Documnt\DocumntController@update']);
+Route::get('documnts/{id}/delete', ['as' => 'documnts.delete', 'uses' => 'Documnt\DocumntController@getDelete']);
+Route::get('documnts/{id}/confirm-delete', ['as' => 'documnts.confirm-delete', 'uses' => 'Documnt\DocumntController@getModalDelete']);
+Route::get('documnts/{documnts}', ['as'=> 'documnts.show', 'uses' => 'Documnt\DocumntController@show']);
+Route::get('documnts/{documnts}/edit', ['as'=> 'documnts.edit', 'uses' => 'Documnt\DocumntController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/documnt/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.documnt.'), function () {
+
+Route::get('documnts', ['as'=> 'documnts.index', 'uses' => 'Documnt\DocumntController@index']);
+Route::post('documnts', ['as'=> 'documnts.store', 'uses' => 'Documnt\DocumntController@store']);
+Route::get('documnts/create', ['as'=> 'documnts.create', 'uses' => 'Documnt\DocumntController@create']);
+Route::put('documnts/{documnts}', ['as'=> 'documnts.update', 'uses' => 'Documnt\DocumntController@update']);
+Route::patch('documnts/{documnts}', ['as'=> 'documnts.update', 'uses' => 'Documnt\DocumntController@update']);
+Route::get('documnts/{id}/delete', ['as' => 'documnts.delete', 'uses' => 'Documnt\DocumntController@getDelete']);
+Route::get('documnts/{id}/confirm-delete', ['as' => 'documnts.confirm-delete', 'uses' => 'Documnt\DocumntController@getModalDelete']);
+Route::get('documnts/{documnts}', ['as'=> 'documnts.show', 'uses' => 'Documnt\DocumntController@show']);
+Route::get('documnts/{documnts}/edit', ['as'=> 'documnts.edit', 'uses' => 'Documnt\DocumntController@edit']);
 
 });

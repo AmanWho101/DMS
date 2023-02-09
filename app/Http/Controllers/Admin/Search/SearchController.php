@@ -7,12 +7,25 @@ use App\Http\Requests\Search\CreateSearchRequest;
 use App\Http\Requests\Search\UpdateSearchRequest;
 use App\Repositories\Search\SearchRepository;
 use App\Http\Controllers\AppBaseController as InfyOmBaseController;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Lang;
 use App\Models\Search\Search;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+
+use App\Models\Document;
+
+use App\Http\Controllers\Controller;
+//use App\Models\Datatable;
+use App\Models\Employee\Employee;
+use Illuminate\Http\Request;
+
+use App\Models\Datatable;
+
+use Yajra\DataTables\DataTables;
+
+//use Yajra\DataTables\DataTables;
 
 class SearchController extends InfyOmBaseController
 {
@@ -32,11 +45,15 @@ class SearchController extends InfyOmBaseController
      */
     public function index(Request $request)
     {
+        $professions=Datatable::pluck('job', 'id');
+        $professions['all']='Select All';
 
-        $this->searchRepository->pushCriteria(new RequestCriteria($request));
-        $searches = $this->searchRepository->all();
-        return view('admin.search.searches.index')
-            ->with('searches', $searches);
+        $max_count =Datatable::all()->count();   // We can pass max count for slider
+        $max_id =Datatable::pluck('id')->max();
+        $min_id =Datatable::pluck('id')->min();
+        
+        return view('admin.search.searches.search',
+             compact('professions', 'max_count', 'max_id', 'min_id'));
     }
 
     /**
@@ -44,119 +61,100 @@ class SearchController extends InfyOmBaseController
      *
      * @return Response
      */
-    public function create()
-    {
-        return view('admin.search.searches.create');
-    }
 
-    /**
-     * Store a newly created Search in storage.
-     *
-     * @param CreateSearchRequest $request
-     *
-     * @return Response
-     */
-    public function store(CreateSearchRequest $request)
-    {
-        $input = $request->all();
+     
 
-        $search = $this->searchRepository->create($input);
+    //  public function sliderData(Request $request)
+    //  {
+    //      if ($request->idSlider!=null) {
+    //          $tables = Datatable::whereBetween('id', $request->idSlider)->get(['id', 'firstname', 'lastname', 'email','job','age']);
+    //      } else {
+    //          $tables = Datatable::get(['id', 'firstname', 'lastname', 'email', 'job', 'age']);
+    //      }
+ 
+    //      return Datatables::of($tables)
+    //          ->make(true);
+    //  }
+ 
+    //  public function radioData(Request $request)
+    //  {
+    //      if ($request->ageRadio!=null && $request->ageRadio !='all') {
+    //          if ($request->ageRadio < 100) {
+    //              $tables = Datatable::where('age', '<=', $request->ageRadio)->get(['id', 'firstname', 'lastname', 'email','job','age']);
+    //          } else {
+    //              $tables = Datatable::where('age', '>', 50)->get(['id', 'firstname', 'lastname', 'email','job','age']);
+    //          }
+    //      } else {
+    //          $tables = Datatable::get(['id', 'firstname', 'lastname', 'email', 'job', 'age']);
+    //      }
+ 
+    //      return Datatables::of($tables)
+    //          ->make(true);
+    //  }
+ 
+ 
+ 
+    //  public function selectData(Request $request)
+    //  {
+    //      if ($request->professionSelect != null && $request->professionSelect != "all") {
+    //          $tables = Datatable::where('id', $request->professionSelect);
+    //      } else {
+    //          $tables = Datatable::get(['id', 'firstname', 'lastname', 'email', 'job', 'age']);
+    //      }
+    //      return DataTables::of($tables)
+    //          ->make(true);
+    //  }
 
-        Flash::success('Search saved successfully.');
 
-        return redirect(route('admin.search.searches.index'));
-    }
+    //  public function buttonData(Request $request)
+    //  {
+    //      if ($request->jobButton!=null) {
+    //          $tables=Datatable::where('gender', $request->jobButton)->get(['id', 'firstname', 'lastname', 'email', 'job', 'age','gender']);
+    //      } else {
+    //          $tables = Datatable::get(['id', 'firstname', 'lastname', 'email', 'job', 'age','gender']);
+    //      }
+ 
+    //      return Datatables::of($tables)
+    //          ->make(true);
+    //  }
+ 
+     
+     public function totalData(Request $request)
+     {
+        //tyring to fetch json content and send data with datatabls
+        $json = file_get_contents("https://randomuser.me/api/");
+        $tables = (string) json_encode($json);
+       // $tables = "'" . $toJson . "'";
+         
+        //  $tables = Datatable::where(
+        //      function ($query) use ($request) {
+        //         if ($request->has('idSlider2') && $request->idSlider2!=null) {
+        //             $query->whereBetween('id', $request->idSlider2);
+        //         }
+        //         if ($request->has('ageRadio2') && $request->ageRadio2 != null && $request->ageRadio2 != 'all') {
+        //             if ($request->ageRadio2 < 100) {
+        //                 $query->where('age', '<=', $request->ageRadio2);
+        //             } else {
+        //                 $query->where('age', '>', 50);
+        //             }
+        //              $query->where('age', '<=', $request->ageRadio2);
+        //         }
+        //         if ($request->has('professionSelect2') && $request->professionSelect2 != null && $request->professionSelect2 != "all") {
+        //             $query->where('id', $request->professionSelect2);
+        //         }
+        //         if ($request->has('jobButton2') && $request->jobButton2 != null) {
+        //             $query->where('gender', $request->jobButton2);
+        //         }
 
-    /**
-     * Display the specified Search.
-     *
-     * @param  int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $search = $this->searchRepository->findWithoutFail($id);
+        //      }
+        //  )->join('documents','documents.user_id','=','datatables.id')
+        //  ->get(['datatables.id as id','documents.file_name as file_name', 'firstname', 'lastname', 'email','job','age','gender']);
+                
+         return Datatables::of($tables)  
+                ->addIndexColumn()
+                ->make(true);
+     }
+   }
 
-        if (empty($search)) {
-            Flash::error('Search not found');
 
-            return redirect(route('searches.index'));
-        }
 
-        return view('admin.search.searches.show')->with('search', $search);
-    }
-
-    /**
-     * Show the form for editing the specified Search.
-     *
-     * @param  int $id
-     *
-     * @return Response
-     */
-    public function edit($id)
-    {
-        $search = $this->searchRepository->findWithoutFail($id);
-
-        if (empty($search)) {
-            Flash::error('Search not found');
-
-            return redirect(route('searches.index'));
-        }
-
-        return view('admin.search.searches.edit')->with('search', $search);
-    }
-
-    /**
-     * Update the specified Search in storage.
-     *
-     * @param  int              $id
-     * @param UpdateSearchRequest $request
-     *
-     * @return Response
-     */
-    public function update($id, UpdateSearchRequest $request)
-    {
-        $search = $this->searchRepository->findWithoutFail($id);
-
-        
-
-        if (empty($search)) {
-            Flash::error('Search not found');
-
-            return redirect(route('searches.index'));
-        }
-
-        $search = $this->searchRepository->update($request->all(), $id);
-
-        Flash::success('Search updated successfully.');
-
-        return redirect(route('admin.search.searches.index'));
-    }
-
-    /**
-     * Remove the specified Search from storage.
-     *
-     * @param  int $id
-     *
-     * @return Response
-     */
-      public function getModalDelete($id = null)
-      {
-          $error = '';
-          $model = '';
-          $confirm_route =  route('admin.search.searches.delete',['id'=>$id]);
-          return View('admin.layouts/modal_confirmation', compact('error','model', 'confirm_route'));
-
-      }
-
-       public function getDelete($id = null)
-       {
-           $sample = Search::destroy($id);
-
-           // Redirect to the group management page
-           return redirect(route('admin.search.searches.index'))->with('success', Lang::get('message.success.delete'));
-
-       }
-
-}

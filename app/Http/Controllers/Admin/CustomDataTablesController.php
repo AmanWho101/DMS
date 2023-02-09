@@ -21,7 +21,8 @@ class CustomDataTablesController extends Controller
         $max_count =Datatable::all()->count();   // We can pass max count for slider
         $max_id =Datatable::pluck('id')->max();
         $min_id =Datatable::pluck('id')->min();
-        return view('admin.examples.custom_datatables', compact('professions', 'max_count', 'max_id', 'min_id'));
+        return view('admin.examples.custom_datatables',
+         compact('professions', 'max_count', 'max_id', 'min_id'));
     }
 
     public function sliderData(Request $request)
@@ -35,6 +36,7 @@ class CustomDataTablesController extends Controller
         return Datatables::of($tables)
             ->make(true);
     }
+
     public function radioData(Request $request)
     {
         if ($request->ageRadio!=null && $request->ageRadio !='all') {
@@ -50,6 +52,9 @@ class CustomDataTablesController extends Controller
         return Datatables::of($tables)
             ->make(true);
     }
+
+
+
     public function selectData(Request $request)
     {
         if ($request->professionSelect != null && $request->professionSelect != "all") {
@@ -71,8 +76,11 @@ class CustomDataTablesController extends Controller
         return Datatables::of($tables)
             ->make(true);
     }
+
+    
     public function totalData(Request $request)
     {
+        
         $tables = Datatable::where(
             function ($query) use ($request) {
                 if ($request->has('idSlider2') && $request->idSlider2!=null) {

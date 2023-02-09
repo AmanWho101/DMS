@@ -13,6 +13,11 @@ use App\Models\Document\Document;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use App\Models\Datatable;
+use Illuminate\Http\JsonResponse;
+use PHPUnit\Util\Json;
+use Yajra\DataTables\DataTables as DataTablesDataTables;
+use Yajra\DataTables\Facades\DataTables;
 
 class DocumentController extends InfyOmBaseController
 {
@@ -32,6 +37,13 @@ class DocumentController extends InfyOmBaseController
      */
     public function index(Request $request)
     {
+    $json = file_get_contents("https://randomuser.me/api/");
+        
+           
+       
+        
+        
+
 
         $this->documentRepository->pushCriteria(new RequestCriteria($request));
         $documents = $this->documentRepository->all();
@@ -46,7 +58,9 @@ class DocumentController extends InfyOmBaseController
      */
     public function create()
     {
-        return view('admin.document.documents.create');
+        $user_id = Datatable::all();
+       
+        return view('admin.document.documents.create',compact('user_id'));
     }
 
     /**
@@ -59,7 +73,7 @@ class DocumentController extends InfyOmBaseController
     public function store(CreateDocumentRequest $request)
     {
         $input = $request->all();
-
+       
         $document = $this->documentRepository->create($input);
 
         Flash::success('Document saved successfully.');

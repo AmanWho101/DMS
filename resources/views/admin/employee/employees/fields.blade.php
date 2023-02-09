@@ -12,8 +12,8 @@
 
 <!-- Wu Field -->
 <div class="form-group col-sm-12">
-    {!! Form::label('wu', 'Wu:') !!}
-    {!! Form::text('wu', null, ['class' => 'form-control']) !!}
+    {!! Form::label('job', 'Job:') !!}
+    {!! Form::text('job', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Submit Field -->

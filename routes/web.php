@@ -258,7 +258,8 @@ Route::group(
         Route::get('custom_datatables/selectData', 'CustomDataTablesController@selectData')->name('custom_datatables.selectData');
         Route::get('custom_datatables/buttonData', 'CustomDataTablesController@buttonData')->name('custom_datatables.buttonData');
         Route::get('custom_datatables/totalData', 'CustomDataTablesController@totalData')->name('custom_datatables.totalData');
-
+        
+       
         //tasks section
         Route::post('task/create', 'TaskController@store')->name('store');
         Route::get('task/data', 'TaskController@data')->name('data');

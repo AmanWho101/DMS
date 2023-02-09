@@ -16,7 +16,10 @@ class Employee extends Model
     public $fillable = [
         'first_name',
         'last_name',
-        'wu'
+        'job',
+        'age',
+        'gender',
+        'email'
     ];
 
     /**
@@ -24,11 +27,7 @@ class Employee extends Model
      *
      * @var array
      */
-    protected $casts = [
-        'first_name' => 'string',
-        'last_name' => 'string',
-        'wu' => 'string'
-    ];
+    
 
     /**
      * Validation rules
