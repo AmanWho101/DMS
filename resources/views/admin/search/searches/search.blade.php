@@ -215,15 +215,16 @@ Custom Data Tables
                         d.idSlider2=idSlider2;
                         d.professionSelect2 = professionSelect2;
                         d.jobButton2=jobButton2;
-                    },
-                success:function($data){
-                    console.log($data);
-                }
+                    }
+                //     ,
+                // success:function($data){
+                //     console.log($data);
+                // }
                 }
                 ,
                 columns: [
                     { data: 'id', name: 'id' },
-                    { data: 'firstname', name: 'firstname' },
+                    { data: 'fullname', name: 'firstname' },
                     { data: 'lastname', name: 'lastname' },
                     { data: 'email', name: 'email' },
                     { data: 'job', name: 'job' },

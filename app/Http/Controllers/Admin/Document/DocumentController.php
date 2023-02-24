@@ -37,12 +37,42 @@ class DocumentController extends InfyOmBaseController
      */
     public function index(Request $request)
     {
-    $json = file_get_contents("https://randomuser.me/api/");
-        
-           
        
-        
-        
+        // $tables = Datatable::where(
+        //     function ($query) use ($request) {
+        //        if ($request->has('idSlider2') && $request->idSlider2!=null) {
+        //            $query->whereBetween('id', $request->idSlider2);
+        //        }
+        //        if ($request->has('ageRadio2') && $request->ageRadio2 != null && $request->ageRadio2 != 'all') {
+        //            if ($request->ageRadio2 < 100) {
+        //                $query->where('age', '<=', $request->ageRadio2);
+        //            } else {
+        //                $query->where('age', '>', 50);
+        //            }
+        //             $query->where('age', '<=', $request->ageRadio2);
+        //        }
+        //        if ($request->has('professionSelect2') && $request->professionSelect2 != null && $request->professionSelect2 != "all") {
+        //            $query->where('id', $request->professionSelect2);
+        //        }
+        //        if ($request->has('jobButton2') && $request->jobButton2 != null) {
+        //            $query->where('gender', $request->jobButton2);
+        //        }
+
+        //     }
+        // )->join('documents','documents.user_id','=','datatables.id')
+        // ->get(['datatables.id as id','documents.file_name as file_name', 'firstname', 'lastname', 'email','job','age','gender']);
+        //      //$tables = $tables[0];
+        //      //$tables =   
+        $json = file_get_contents("https://randomuser.me/api/");
+         $tables = json_encode($json,true);
+         //$table = Datatables::of($tables)  
+                //->addIndexColumn()
+                //->make(true);
+            
+            
+             
+             //$table = json_encode($table,true);
+        dd($tables);
 
 
         $this->documentRepository->pushCriteria(new RequestCriteria($request));

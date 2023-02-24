@@ -121,10 +121,38 @@ class SearchController extends InfyOmBaseController
      
      public function totalData(Request $request)
      {
-        //tyring to fetch json content and send data with datatabls
-        $json = file_get_contents("https://randomuser.me/api/");
-        $tables = (string) json_encode($json);
-       // $tables = "'" . $toJson . "'";
+        // $d_id = 11;
+        // $id = 10;
+       
+
+
+        // $get = Datatable::where(
+        //     function($query) use ($d_id,$id){
+        //             $if_id = $query->where('id',$d_id);
+                    
+        //        }
+        // )->get();
+             
+        // $api = file_get_contents("http://hrms.astu.edu.et/api/person/".$id);
+        // $json = json_decode($api,true);
+        
+        // $get['api'] = $json;
+
+        // $get = response()->Json($get);
+       
+        // $get = json_encode($get,true);
+        // $get = json_decode($get,true);
+        // $get = $get['original'];
+        // $get = $get['api'];
+        // $get = $get[0];
+        
+        //dd($get['fullname']);
+       
+       
+       
+    //     //tyring to fetch json content and send data with datatabls
+         
+    //    // $tables = "'" . $toJson . "'";
          
         //  $tables = Datatable::where(
         //      function ($query) use ($request) {
@@ -149,8 +177,14 @@ class SearchController extends InfyOmBaseController
         //      }
         //  )->join('documents','documents.user_id','=','datatables.id')
         //  ->get(['datatables.id as id','documents.file_name as file_name', 'firstname', 'lastname', 'email','job','age','gender']);
-                
-         return Datatables::of($tables)  
+        $person = file_get_contents("http://hrms.astu.edu.et/api/person/" . '10');
+        //$person = file_get_contents("https://randomuser.me/api/");
+        $purchaser_list= json_decode($person, true);
+         //$tables = json_encode($purchaser_list,true);
+        //  $table = Datatables::of($purchaser_list)  
+        //         ->addIndexColumn()
+        //         ->make(true);
+         return Datatables::of($purchaser_list)  
                 ->addIndexColumn()
                 ->make(true);
      }
